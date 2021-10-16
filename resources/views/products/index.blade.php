@@ -15,7 +15,14 @@
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="" class="form-control">
-
+                            @foreach ($variants as $variant)
+                                <option value="{{ $variant->id }}">{{ $variant->title }}</option>
+                                    @foreach ($variants as $variant )
+                                        <option value="{{ $variant->id }}">{{ $variant->title }}</option>
+                                    @endforeach
+                                
+                            @endforeach
+                           
                     </select>
                 </div>
 
