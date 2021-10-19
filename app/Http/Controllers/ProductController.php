@@ -8,6 +8,9 @@ use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
 use App\Models\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+// use App\Http\Controllers\ProductController;
 
 class ProductController extends Controller
 {
@@ -18,9 +21,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $variants = Variant::all();
-        $variantDetails = ProductVariant::with('variant')->get();
-        // dd( $variantDetails);
+        // $variants = Variant::all();
+        $variants = Variant::with('productVariants')->get();
+        // dd( $variants);
         $products = Product::all();
         return view('products.index',compact('products','variants'));
     }
@@ -44,7 +47,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());   
+        // dd($request->all());   
         $file = $request->file('images');
         $name = '/images/' . uniqid() . '.' . $file->extension();
         $file->storePubliclyAs('public', $name);
@@ -60,11 +63,10 @@ class ProductController extends Controller
                 'product_id' =>  $productCreateId,
                 'file_path' => $name,
             ]);
-            return response()->json([
-                'status'  => 'success',
-                'message' => 'Product has been created!',
-                'icon'    => 'check',
-            ]);
+
+            Session::flash('message', 'My message');
+			
+            return redirect()->action([ProductController::class, 'index']);
         
 
 

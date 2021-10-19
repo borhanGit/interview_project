@@ -5,6 +5,9 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
     </div>
+    @if (Session::has('message'))
+	   <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
 
 
     <div class="card">
@@ -17,8 +20,8 @@
                     <select name="variant" id="" class="form-control">
                             @foreach ($variants as $variant)
                                 <option value="{{ $variant->id }}">{{ $variant->title }}</option>
-                                    @foreach ($variants as $variant )
-                                        <option value="{{ $variant->id }}">{{ $variant->title }}</option>
+                                    @foreach ($variant->productVariants as $productVariant )
+                                        <option value="{{ $productVariant->id }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ $productVariant->variant }}</option>
                                     @endforeach
                                 
                             @endforeach
